@@ -1,7 +1,13 @@
 {
   "version": 2,
   "builds": [
-    { "src": "server.js", "use": "@vercel/node" }
+    {
+      "src": "server.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["*.html", "*.css", "script.js", "*.png", "db.json"]
+      }
+    }
   ],
   "routes": [
     { "src": "/(.*)", "dest": "/server.js" }

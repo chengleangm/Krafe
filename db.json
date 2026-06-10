@@ -1,0 +1,129 @@
+{
+  "orders": [
+    {
+      "id": "#KR-25005",
+      "name": "Chengleang Mean",
+      "phone": "+85515796200",
+      "email": "leang787890@gmail.com",
+      "address": "Svay Kimheng, Siem Reap, Siem Reap Province, Cambodia",
+      "items": [
+        {
+          "id": 6,
+          "qty": 1
+        },
+        {
+          "id": 7,
+          "qty": 1
+        },
+        {
+          "id": 8,
+          "qty": 1
+        }
+      ],
+      "total": 7.3,
+      "status": "pending",
+      "time": "2026-06-09T15:22:23.378Z"
+    },
+    {
+      "id": "#KR-98215",
+      "name": "Chengleang Mean",
+      "phone": "+85515796200",
+      "email": "leang787890@gmail.com",
+      "address": "Svay Kimheng, Siem Reap, Siem Reap Province, Cambodia",
+      "items": [
+        {
+          "id": 9,
+          "qty": 1
+        }
+      ],
+      "total": 12,
+      "status": "pending",
+      "time": "2026-06-09T15:21:32.067Z"
+    },
+    {
+      "id": "#KR-44461",
+      "name": "Chengleang Mean",
+      "phone": "+85515796200",
+      "email": "leang787890@gmail.com",
+      "address": "Svay Kimheng, Siem Reap, Siem Reap Province, Cambodia",
+      "items": [
+        {
+          "id": 9,
+          "qty": 1
+        }
+      ],
+      "total": 12,
+      "status": "pending",
+      "time": "2026-06-09T15:19:33.347Z"
+    },
+    {
+      "id": "#KR-77446",
+      "name": "Chengleang Mean",
+      "phone": "+85515796200",
+      "email": "leang787890@gmail.com",
+      "address": "Svay Kimheng, Siem Reap, Siem Reap Province, Cambodia",
+      "items": [
+        {
+          "id": 3,
+          "qty": 1
+        },
+        {
+          "id": 2,
+          "qty": 1
+        },
+        {
+          "id": 4,
+          "qty": 1
+        }
+      ],
+      "total": 9.7,
+      "status": "pending",
+      "time": "2026-06-09T15:12:45.760Z"
+    }
+  ],
+  "products": [
+    {
+      "id": 5,
+      "name": "Butter Croissant",
+      "cat": "bakery",
+      "tag": "fresh",
+      "price": 1.75,
+      "desc": "Flaky, warm, buttery pastry.",
+      "img": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=700&q=85"
+    },
+    {
+      "id": 6,
+      "name": "Cinnamon Roll",
+      "cat": "bakery",
+      "price": 2.25,
+      "desc": "Soft roll with cinnamon glaze.",
+      "img": "https://images.unsplash.com/photo-1509365465985-25d11c17e812?auto=format&fit=crop&w=700&q=85"
+    },
+    {
+      "id": 7,
+      "name": "Matcha Latte",
+      "cat": "signature",
+      "tag": "new",
+      "price": 3.25,
+      "desc": "Creamy Japanese matcha with milk.",
+      "img": "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=700&q=85"
+    },
+    {
+      "id": 8,
+      "name": "Espresso Shot",
+      "cat": "coffee",
+      "price": 1.8,
+      "desc": "Rich, strong, and aromatic.",
+      "img": "https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?auto=format&fit=crop&w=700&q=85"
+    },
+    {
+      "id": 9,
+      "name": "FJKAS",
+      "price": 12,
+      "img": "https://html.com/wp-content/uploads/flamingo.webp",
+      "cat": "coffee",
+      "tag": "popular",
+      "desc": "dsfs"
+    }
+  ]
+}

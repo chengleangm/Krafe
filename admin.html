@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin — Krafe Coffee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',system-ui,sans-serif;background:#F5F5F5;color:#111;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font:inherit;border:0;background:none;cursor:pointer;color:inherit}
+img{display:block;max-width:100%}
+input,select,textarea{font:inherit}
+
+/* ── Login ── */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#111;padding:20px}
+.login-card{background:white;border-radius:24px;padding:44px 48px;width:min(420px,100%);box-shadow:0 24px 64px rgba(0,0,0,.35)}
+.login-logo{height:36px;margin-bottom:32px}
+.login-card h2{font-family:'DM Serif Display',serif;font-size:1.8rem;margin-bottom:6px}
+.login-card>p{color:#777;font-size:.88rem;margin-bottom:28px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:7px}
+.field input,.field select,.field textarea{width:100%;padding:13px 16px;border:1px solid #E0E0E0;border-radius:12px;font-size:.95rem;outline:none;transition:.2s;background:white}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#CC0000;box-shadow:0 0 0 3px rgba(204,0,0,.1)}
+.field textarea{min-height:80px;resize:vertical}
+.btn-primary{width:100%;padding:14px;border-radius:999px;background:#CC0000;color:white;font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;transition:.25s;border:0;cursor:pointer}
+.btn-primary:hover{background:#FF3333}
+.login-hint{text-align:center;margin-top:14px;font-size:.75rem;color:#aaa}
+.login-hint b{color:#777}
+
+/* ── Admin layout ── */
+.admin-layout{display:grid;grid-template-columns:224px 1fr;min-height:100vh}
+
+/* ── Sidebar ── */
+.sidebar{background:#111;color:white;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar-logo{padding:26px 22px 18px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sidebar-logo img{height:28px}
+.sidebar-nav{flex:1;padding:14px 10px}
+.nav-label{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.28);padding:14px 12px 5px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:10px;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.6);cursor:pointer;transition:.15s;margin-bottom:1px}
+.nav-item:hover{background:rgba(255,255,255,.07);color:white}
+.nav-item.active{background:#CC0000;color:white}
+.nav-item svg{flex-shrink:0}
+.nav-badge{margin-left:auto;background:#CC0000;color:white;border-radius:999px;padding:1px 7px;font-size:.6rem;font-weight:800}
+.sidebar-foot{padding:12px 10px 18px;border-top:1px solid rgba(255,255,255,.07)}
+
+/* ── Main ── */
+.admin-main{display:flex;flex-direction:column;min-height:100vh;overflow:hidden}
+.topbar{background:white;border-bottom:1px solid #E0E0E0;padding:0 30px;height:62px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;flex-shrink:0}
+.topbar h1{font-family:'DM Serif Display',serif;font-size:1.35rem}
+.topbar-right{display:flex;align-items:center;gap:8px;font-size:.8rem;color:#777}
+.online-dot{width:7px;height:7px;border-radius:50%;background:#22C55E;flex-shrink:0}
+.admin-body{padding:26px 30px;flex:1}
+
+/* ── Stat cards ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:26px}
+.stat-card{background:white;border-radius:16px;padding:20px 22px;border:1px solid #E0E0E0}
+.stat-card__lbl{font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#999;margin-bottom:10px}
+.stat-card__val{font-family:'DM Serif Display',serif;font-size:2rem;line-height:1}
+.stat-card__sub{font-size:.72rem;color:#bbb;margin-top:5px}
+.stat-card--accent .stat-card__val{color:#CC0000}
+
+/* ── Section card ── */
+.s-card{background:white;border-radius:16px;border:1px solid #E0E0E0;overflow:hidden;margin-bottom:22px}
+.s-card-head{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid #E0E0E0;flex-shrink:0}
+.s-card-head h2{font-family:'DM Serif Display',serif;font-size:1.1rem}
+
+/* ── Table ── */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#aaa;padding:11px 18px;text-align:left;border-bottom:1px solid #E0E0E0;white-space:nowrap;background:#FAFAFA}
+.tbl td{padding:13px 18px;border-bottom:1px solid #F0F0F0;font-size:.84rem;vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tbody tr:hover td{background:#FAFAFA}
+.thumb{width:42px;height:42px;object-fit:cover;border-radius:8px;flex-shrink:0}
+
+/* ── Badges ── */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.b-pending  {background:#FEF3C7;color:#92400E}
+.b-preparing{background:#DBEAFE;color:#1E40AF}
+.b-ready    {background:#D1FAE5;color:#065F46}
+.b-delivered{background:#F3F4F6;color:#6B7280}
+.b-cat      {background:#F5F5F5;color:#555;border:1px solid #E0E0E0}
+
+/* ── Buttons ── */
+.btn-sm{padding:6px 12px;border-radius:8px;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:.15s;border:1px solid transparent;white-space:nowrap}
+.btn-ghost{background:#F5F5F5;color:#111;border-color:#E0E0E0}.btn-ghost:hover{background:#E8E8E8}
+.btn-red  {background:#FFF0F0;color:#CC0000;border-color:#FFCCCC}.btn-red:hover{background:#FFE0E0}
+.btn-solid{background:#CC0000;color:white}.btn-solid:hover{background:#FF3333}
+.btn-green{background:#D1FAE5;color:#065F46;border-color:#A7F3D0}.btn-green:hover{background:#A7F3D0}
+
+/* ── Status select ── */
+.status-sel{padding:5px 10px;border-radius:8px;border:1px solid #E0E0E0;font-size:.75rem;font-weight:600;outline:none;background:white;cursor:pointer}
+
+/* ── Modal ── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:.2s}
+.modal-bg.open{opacity:1;pointer-events:auto}
+.modal{background:white;border-radius:20px;width:min(500px,100%);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.22);overflow:hidden}
+.modal-head{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid #E0E0E0;flex-shrink:0;background:white}
+.modal-head h3{font-family:'DM Serif Display',serif;font-size:1.2rem}
+.modal-body{padding:22px 24px;overflow-y:auto;flex:1}
+.modal-foot{padding:14px 24px;border-top:1px solid #E0E0E0;display:flex;gap:8px;justify-content:flex-end;flex-shrink:0}
+
+/* ── Empty ── */
+.empty{text-align:center;padding:52px 20px;color:#bbb}
+.empty p{font-size:.84rem;margin-top:6px;color:#ccc}
+
+/* ── Toast ── */
+.a-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(16px);background:#111;color:white;padding:11px 20px;border-radius:999px;opacity:0;pointer-events:none;transition:.25s;z-index:999;font-size:.8rem;white-space:nowrap}
+.a-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(max-width:860px){
+  .admin-layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .admin-body{padding:18px 14px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── Login ──────────────────────────────────────────────────────────────── -->
+<div id="loginScreen">
+  <div class="login-wrap">
+    <div class="login-card">
+      <img src="logoKrafe.png" alt="Krafe Coffee" class="login-logo">
+      <h2>Admin Panel</h2>
+      <p>Sign in to manage your coffee shop.</p>
+      <div class="field"><label>Username</label><input type="text" id="loginUser" placeholder="admin" autocomplete="username"></div>
+      <div class="field"><label>Password</label><input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"></div>
+      <button class="btn-primary" id="loginBtn">Sign in</button>
+      <p class="login-hint">Demo: <b>admin</b> / <b>admin123</b></p>
+    </div>
+  </div>
+</div>
+
+<!-- ── Admin ──────────────────────────────────────────────────────────────── -->
+<div id="adminScreen" style="display:none">
+  <div class="admin-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo"><img src="logoKrafe-white.png" alt="Krafe Coffee"></div>
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+        <div class="nav-item active" data-sec="dashboard">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </div>
+        <div class="nav-item" data-sec="orders">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/><path d="M9 12h6M9 16h4"/></svg>
+          Orders
+          <span class="nav-badge" id="pendingBadge" style="display:none">0</span>
+        </div>
+        <div class="nav-item" data-sec="products">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          Products
+        </div>
+        <div class="nav-label">Site</div>
+        <a href="index.html" target="_blank" class="nav-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          View site
+        </a>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="nav-item" id="logoutBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="admin-main">
+      <div class="topbar">
+        <h1 id="pageTitle">Dashboard</h1>
+        <div class="topbar-right">
+          <div class="online-dot"></div>
+          <span>Admin</span>
+        </div>
+      </div>
+
+      <div class="admin-body">
+
+        <!-- Dashboard -->
+        <section id="secDashboard">
+          <div class="stats-grid">
+            <div class="stat-card stat-card--accent">
+              <div class="stat-card__lbl">Total Orders</div>
+              <div class="stat-card__val" id="sTotalOrders">—</div>
+              <div class="stat-card__sub">All time</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__lbl">Revenue</div>
+              <div class="stat-card__val" id="sRevenue">—</div>
+              <div class="stat-card__sub">Delivered orders</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__lbl">Menu Items</div>
+              <div class="stat-card__val" id="sProducts">—</div>
+              <div class="stat-card__sub">Active</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__lbl">Pending</div>
+              <div class="stat-card__val" id="sPending">—</div>
+              <div class="stat-card__sub">Need attention</div>
+            </div>
+          </div>
+
+          <div class="s-card">
+            <div class="s-card-head">
+              <h2>Recent Orders</h2>
+              <button class="btn-sm btn-ghost" onclick="showSec('orders')">View all →</button>
+            </div>
+            <table class="tbl">
+              <thead><tr><th>Order #</th><th>Customer</th><th>Items</th><th>Total</th><th>Time</th><th>Status</th></tr></thead>
+              <tbody id="recentBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Orders -->
+        <section id="secOrders" style="display:none">
+          <div class="s-card">
+            <div class="s-card-head">
+              <h2>All Orders</h2>
+              <button class="btn-sm btn-red" onclick="clearOrders()">Clear all</button>
+            </div>
+            <table class="tbl">
+              <thead><tr><th>Order #</th><th>Customer</th><th>Contact</th><th>Items</th><th>Total</th><th>Address</th><th>Status</th></tr></thead>
+              <tbody id="ordersBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Products -->
+        <section id="secProducts" style="display:none">
+          <div class="s-card">
+            <div class="s-card-head">
+              <h2>Menu Products</h2>
+              <button class="btn-sm btn-solid" onclick="openAdd()">+ Add product</button>
+            </div>
+            <table class="tbl">
+              <thead><tr><th></th><th>Name</th><th>Category</th><th>Tag</th><th>Price</th><th>Actions</th></tr></thead>
+              <tbody id="productsBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<!-- Product modal -->
+<div class="modal-bg" id="prodModal">
+  <div class="modal">
+    <div class="modal-head"><h3 id="modalTitle">Edit Product</h3><button onclick="closeProdModal()">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="fId">
+      <div class="field"><label>Name</label><input type="text" id="fName" placeholder="e.g. Classic Latte"></div>
+      <div class="field"><label>Category</label>
+        <select id="fCat"><option value="coffee">Coffee</option><option value="signature">Signature</option><option value="bakery">Bakery</option></select>
+      </div>
+      <div class="field"><label>Price (USD)</label><input type="number" id="fPrice" placeholder="0.00" step="0.01" min="0"></div>
+      <div class="field"><label>Tag</label>
+        <select id="fTag"><option value="">None</option><option value="popular">Popular</option><option value="new">New</option><option value="fresh">Fresh</option></select>
+      </div>
+      <div class="field"><label>Description</label><input type="text" id="fDesc" placeholder="Short description"></div>
+      <div class="field"><label>Image URL</label><input type="text" id="fImg" placeholder="https://images.unsplash.com/..."></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sm btn-ghost" onclick="closeProdModal()">Cancel</button>
+      <button class="btn-sm btn-solid" id="saveProdBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="a-toast" id="aToast"></div>
+
+<script>
+// ── API helpers ───────────────────────────────────────────────────────────────
+const api = {
+  get:    url       => fetch(url).then(r => r.json()),
+  post:   (url, d)  => fetch(url, { method:'POST',  headers:{'Content-Type':'application/json'}, body:JSON.stringify(d) }).then(r => r.json()),
+  put:    (url, d)  => fetch(url, { method:'PUT',   headers:{'Content-Type':'application/json'}, body:JSON.stringify(d) }).then(r => r.json()),
+  patch:  (url, d)  => fetch(url, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify(d) }).then(r => r.json()),
+  delete: url       => fetch(url, { method:'DELETE' }).then(r => r.json()),
+};
+
+let products = [];
+let orders   = [];
+
+async function loadData() {
+  [orders, products] = await Promise.all([
+    api.get('/api/orders'),
+    api.get('/api/products'),
+  ]);
+}
+
+// ── Auth ──────────────────────────────────────────────────────────────────────
+if (sessionStorage.getItem('krafeAdmin') === '1') showAdmin();
+
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+document.getElementById('loginPass').addEventListener('keydown', e => e.key === 'Enter' && doLogin());
+document.getElementById('loginUser').addEventListener('keydown', e => e.key === 'Enter' && doLogin());
+
+function doLogin() {
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value;
+  if (u === 'admin' && p === 'admin123') {
+    sessionStorage.setItem('krafeAdmin', '1');
+    showAdmin();
+  } else {
+    aToast('Invalid username or password');
+    document.getElementById('loginPass').value = '';
+    document.getElementById('loginPass').focus();
+  }
+}
+
+async function showAdmin() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminScreen').style.display = '';
+  await loadData();
+  renderAll();
+  // Poll for new orders every 5 seconds
+  setInterval(async () => {
+    const fresh = await api.get('/api/orders').catch(() => null);
+    if (!fresh) return;
+    const prevCount = orders.length;
+    orders = fresh;
+    renderDashboard();
+    renderOrders();
+    if (fresh.length > prevCount) aToast('New order received!');
+  }, 5000);
+}
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  sessionStorage.removeItem('krafeAdmin');
+  location.reload();
+});
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+const SECS = ['dashboard','orders','products'];
+
+function showSec(name) {
+  SECS.forEach(s => {
+    document.getElementById('sec' + s[0].toUpperCase() + s.slice(1)).style.display = s === name ? '' : 'none';
+    document.querySelector(`[data-sec="${s}"]`)?.classList.toggle('active', s === name);
+  });
+  document.getElementById('pageTitle').textContent = name[0].toUpperCase() + name.slice(1);
+}
+
+document.querySelectorAll('[data-sec]').forEach(el =>
+  el.addEventListener('click', () => showSec(el.dataset.sec))
+);
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const $m = n => '$' + Number(n).toFixed(2);
+
+function timeAgo(iso) {
+  const d = Math.floor((Date.now() - new Date(iso)) / 60000);
+  if (d < 1)   return 'Just now';
+  if (d < 60)  return d + 'm ago';
+  if (d < 1440) return Math.floor(d / 60) + 'h ago';
+  return Math.floor(d / 1440) + 'd ago';
+}
+
+function itemSummary(items) {
+  return items.map(it => {
+    const p = products.find(x => x.id === it.id);
+    return (p ? p.name : '(deleted)') + (it.qty > 1 ? ` ×${it.qty}` : '');
+  }).join(', ');
+}
+
+const STATUS_CLASS = { pending:'b-pending', preparing:'b-preparing', ready:'b-ready', delivered:'b-delivered' };
+const badge = s => `<span class="badge ${STATUS_CLASS[s] || 'b-pending'}">${s}</span>`;
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function renderDashboard() {
+  const pending = orders.filter(o => o.status === 'pending').length;
+  const revenue = orders.filter(o => o.status === 'delivered').reduce((s, o) => s + +o.total, 0);
+
+  document.getElementById('sTotalOrders').textContent = orders.length;
+  document.getElementById('sRevenue').textContent     = $m(revenue);
+  document.getElementById('sProducts').textContent    = products.length;
+  document.getElementById('sPending').textContent     = pending;
+
+  const pb = document.getElementById('pendingBadge');
+  pb.textContent   = pending;
+  pb.style.display = pending ? '' : 'none';
+
+  const recent = orders.slice(0, 6);
+  document.getElementById('recentBody').innerHTML = recent.length
+    ? recent.map(o => `<tr>
+        <td style="font-weight:700;font-size:.78rem">${o.id}</td>
+        <td>${o.name}</td>
+        <td style="color:#777;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.8rem">${itemSummary(o.items)}</td>
+        <td style="font-weight:700">${$m(o.total)}</td>
+        <td style="color:#aaa;font-size:.78rem">${timeAgo(o.time)}</td>
+        <td>${badge(o.status)}</td>
+      </tr>`).join('')
+    : `<tr><td colspan="6"><div class="empty">No orders yet.<p>Place an order on the demo site to see it here.</p></div></td></tr>`;
+}
+
+function renderOrders() {
+  document.getElementById('ordersBody').innerHTML = orders.length
+    ? orders.map(o => `<tr>
+        <td style="font-weight:700;font-size:.78rem">${o.id}<br><span style="font-weight:400;color:#bbb;font-size:.72rem">${timeAgo(o.time)}</span></td>
+        <td style="font-weight:600">${o.name}</td>
+        <td style="font-size:.78rem;color:#777">${o.phone}<br>${o.email}</td>
+        <td style="font-size:.8rem;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${itemSummary(o.items)}</td>
+        <td style="font-weight:700">${$m(o.total)}</td>
+        <td style="font-size:.78rem;color:#777;max-width:140px">${o.address || '—'}</td>
+        <td><select class="status-sel" onchange="updateStatus('${o.id}', this.value)">
+          ${['pending','preparing','ready','delivered'].map(s => `<option${o.status === s ? ' selected' : ''}>${s}</option>`).join('')}
+        </select></td>
+      </tr>`).join('')
+    : `<tr><td colspan="7"><div class="empty">No orders yet.<p>Orders placed through checkout appear here.</p></div></td></tr>`;
+}
+
+function renderProducts() {
+  document.getElementById('productsBody').innerHTML = products.map((p, i) => `
+    <tr>
+      <td><img src="${p.img}" class="thumb" alt="${p.name}"></td>
+      <td style="font-weight:700">${p.name}</td>
+      <td><span class="badge b-cat">${p.cat}</span></td>
+      <td>${p.tag ? `<span class="badge b-preparing">${p.tag}</span>` : '<span style="color:#ddd">—</span>'}</td>
+      <td style="font-weight:700;color:#CC0000">${$m(p.price)}</td>
+      <td style="display:flex;gap:6px">
+        <button class="btn-sm btn-ghost" onclick="openEdit(${i})">Edit</button>
+        <button class="btn-sm btn-red"   onclick="deleteProd(${i})">Delete</button>
+      </td>
+    </tr>`).join('');
+}
+
+function renderAll() { renderDashboard(); renderOrders(); renderProducts(); }
+
+// ── Order actions ─────────────────────────────────────────────────────────────
+async function updateStatus(orderId, status) {
+  await api.patch('/api/orders/' + encodeURIComponent(orderId), { status });
+  const o = orders.find(x => x.id === orderId);
+  if (o) o.status = status;
+  renderDashboard();
+  renderOrders();
+  aToast('Order updated to "' + status + '"');
+}
+
+async function clearOrders() {
+  if (!orders.length) return aToast('No orders to clear');
+  await api.delete('/api/orders');
+  orders = [];
+  renderAll();
+  aToast('All orders cleared');
+}
+
+// ── Product modal ─────────────────────────────────────────────────────────────
+let editIdx = -1;
+
+function openEdit(i) {
+  editIdx = i;
+  const p = products[i];
+  document.getElementById('modalTitle').textContent = 'Edit Product';
+  document.getElementById('fId').value    = p.id;
+  document.getElementById('fName').value  = p.name;
+  document.getElementById('fCat').value   = p.cat;
+  document.getElementById('fPrice').value = p.price;
+  document.getElementById('fTag').value   = p.tag || '';
+  document.getElementById('fDesc').value  = p.desc;
+  document.getElementById('fImg').value   = p.img;
+  document.getElementById('saveProdBtn').onclick = saveEdit;
+  document.getElementById('prodModal').classList.add('open');
+}
+
+function openAdd() {
+  editIdx = -1;
+  document.getElementById('modalTitle').textContent = 'Add Product';
+  ['fName','fDesc','fImg','fPrice'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('fCat').value = 'coffee';
+  document.getElementById('fTag').value = '';
+  document.getElementById('saveProdBtn').onclick = saveAdd;
+  document.getElementById('prodModal').classList.add('open');
+}
+
+function closeProdModal() { document.getElementById('prodModal').classList.remove('open'); }
+document.getElementById('prodModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('prodModal')) closeProdModal();
+});
+
+async function saveEdit() {
+  const name  = document.getElementById('fName').value.trim();
+  const price = parseFloat(document.getElementById('fPrice').value);
+  if (!name || isNaN(price) || price < 0) return aToast('Name and valid price required');
+  const updated = {
+    ...products[editIdx], name, price,
+    cat:  document.getElementById('fCat').value,
+    tag:  document.getElementById('fTag').value || undefined,
+    desc: document.getElementById('fDesc').value.trim(),
+    img:  document.getElementById('fImg').value.trim() || products[editIdx].img,
+  };
+  await api.put('/api/products/' + updated.id, updated);
+  products[editIdx] = updated;
+  renderProducts(); renderDashboard(); closeProdModal();
+  aToast('Product saved');
+}
+
+async function saveAdd() {
+  const name  = document.getElementById('fName').value.trim();
+  const price = parseFloat(document.getElementById('fPrice').value);
+  const img   = document.getElementById('fImg').value.trim();
+  if (!name || isNaN(price) || price < 0) return aToast('Name and valid price required');
+  if (!img) return aToast('Image URL is required');
+  const newId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
+  const newProd = {
+    id: newId, name, price, img,
+    cat:  document.getElementById('fCat').value,
+    tag:  document.getElementById('fTag').value || undefined,
+    desc: document.getElementById('fDesc').value.trim(),
+  };
+  await api.post('/api/products', newProd);
+  products.push(newProd);
+  renderProducts(); renderDashboard(); closeProdModal();
+  aToast('Product added');
+}
+
+async function deleteProd(i) {
+  const p = products[i];
+  await api.delete('/api/products/' + p.id);
+  products.splice(i, 1);
+  renderProducts(); renderDashboard();
+  aToast(p.name + ' removed');
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+let aTimer;
+function aToast(msg) {
+  const t = document.getElementById('aToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(aTimer);
+  aTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+</script>
+</body>
+</html>

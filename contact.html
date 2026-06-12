@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Contact — Krafe Coffee</title>
+<title>Contact - Krafe Coffee</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Serif+Text:ital@0;1&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="topbar">Fresh roasted beans · Free delivery in Phnom Penh on orders over $15</div>
+<div class="topbar">Fresh roasted beans | Free delivery in Phnom Penh on orders over $15</div>
 <header>
   <nav class="nav">
     <div class="nav__left">
@@ -29,7 +29,9 @@
 </header>
 <div class="mob-nav" id="mobNav">
   <div class="mob-nav__panel">
-    <button class="mob-nav__close" id="mobNavClose">✕</button>
+    <button class="mob-nav__close icon-only" id="mobNavClose" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
     <button class="mob-nav__search-btn" onclick="document.getElementById('mobNav').classList.remove('open');openSearch()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Search</button>
     <nav class="mob-nav__links">
       <a href="index.html">Home</a>
@@ -56,7 +58,7 @@
     <div class="contact-grid">
 
       <!-- Contact form -->
-      <div>
+      <div class="contact-panel">
         <div class="label" style="color:var(--coffee);margin-bottom:16px">Send a message</div>
         <h2 style="font-family:var(--display);font-size:clamp(1.8rem,3vw,2.6rem);margin-bottom:28px">We read every message</h2>
         <form id="contactForm">
@@ -74,40 +76,53 @@
           </div>
           <div class="form-group">
             <label for="cMsg">Message</label>
-            <textarea id="cMsg" placeholder="Tell us how we can help…"></textarea>
+            <textarea id="cMsg" placeholder="Tell us how we can help..."></textarea>
           </div>
           <button type="submit" class="btn" style="width:100%">Send message</button>
         </form>
       </div>
 
       <!-- Location info -->
-      <div>
+      <div class="contact-panel contact-panel--info">
         <div class="label" style="color:var(--coffee);margin-bottom:16px">Find us</div>
         <h2 style="font-family:var(--display);font-size:clamp(1.8rem,3vw,2.6rem);margin-bottom:28px">Visit Krafe Coffee</h2>
 
         <div class="info-block">
-          <h4>📍 Address</h4>
+          <div class="info-block__head">
+            <div class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <h4>Address</h4>
+          </div>
           <p>Street 51, BKK1<br>Phnom Penh, Cambodia</p>
         </div>
 
         <div class="info-block">
-          <h4>🕐 Opening Hours</h4>
-          <div class="hours-grid" style="color:var(--muted);font-size:.92rem;line-height:1.9">
-            <span>Monday – Friday</span><span>7:00 AM – 9:00 PM</span>
-            <span>Saturday</span><span>7:00 AM – 10:00 PM</span>
-            <span>Sunday</span><span>8:00 AM – 8:00 PM</span>
+          <div class="info-block__head">
+            <div class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <h4>Opening Hours</h4>
+          </div>
+          <div class="hours-grid">
+            <span>Monday - Friday</span><span>7:00 AM - 9:00 PM</span>
+            <span>Saturday</span><span>7:00 AM - 10:00 PM</span>
+            <span>Sunday</span><span>8:00 AM - 8:00 PM</span>
           </div>
         </div>
 
         <div class="info-block">
-          <h4>📞 Phone &amp; Email</h4>
+          <div class="info-block__head">
+            <div class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.12 12 19.79 19.79 0 0 1 1.07 3.38 2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <h4>Phone &amp; Email</h4>
+          </div>
           <a href="tel:+85512345678">+855 12 345 678</a>
           <a href="mailto:hello@krafecoffee.com">hello@krafecoffee.com</a>
         </div>
 
-        <!-- Map placeholder -->
-        <div style="background:var(--line);border-radius:24px;height:220px;display:flex;align-items:center;justify-content:center;margin-top:8px">
-          <span style="color:var(--muted);font-size:.85rem;letter-spacing:.1em;text-transform:uppercase">Map coming soon</span>
+        <div class="map-frame" aria-label="Krafe Coffee location map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d74186.53662627384!2d104.82560006775881!3d11.563284641027543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109510012835bb5%3A0x11b9bc1efe5c9c1!2sKRAFE%20COFFEE!5e1!3m2!1sen!2skh!4v1781244721797!5m2!1sen!2skh"
+            title="Krafe Coffee on Google Maps"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
 
@@ -117,18 +132,18 @@
 
 <footer>
   <div class="foot">
-    <div><img src="logoKrafe-white.png" alt="Krafe Coffee" class="foot-logo"><p>Modern coffee shop serving premium drinks, pastries, and comfortable café moments.</p></div>
+    <div><img src="logoKrafe-white.png" alt="Krafe Coffee" class="foot-logo"><p>Modern coffee shop serving premium drinks, pastries, and comfortable cafe moments.</p></div>
     <div><h5>Shop</h5><ul><li><a href="menu.html?cat=coffee">Coffee</a></li><li><a href="menu.html?cat=signature">Signature Drinks</a></li><li><a href="menu.html?cat=bakery">Bakery</a></li></ul></div>
     <div><h5>Visit</h5><ul><li><a href="about.html">Our Story</a></li><li><a href="contact.html">Location</a></li><li><a href="contact.html">Contact</a></li></ul></div>
     <div><h5>Newsletter</h5><div class="news"><input id="newsEmail" type="email" placeholder="Email address"><button id="newsBtn">Join</button></div><p>Get new menu drops and promotions.</p></div>
   </div>
-  <div class="copy"><span>© 2026 Krafe Coffee</span><span>Freshly brewed with care</span></div>
+  <div class="copy"><span>(c) 2026 Krafe Coffee</span><span>Freshly brewed with care</span></div>
 </footer>
 
 <div class="co-overlay" id="coOverlay">
   <div class="co-modal">
     <div id="coStep1">
-      <div class="co-head"><h3>Checkout</h3><button id="coClose">✕</button></div>
+      <div class="co-head"><h3>Checkout</h3><button class="icon-only" id="coClose" aria-label="Close checkout"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
       <div class="co-body">
         <div>
           <div class="co-section-title">Order summary</div>
@@ -144,13 +159,13 @@
       </div>
       <div class="co-foot">
         <div class="co-row-total"><span>Total</span><span id="coTotal">$0.00</span></div>
-        <div class="co-note">Demo only — no real payment processed</div>
+        <div class="co-note">Demo only - no real payment processed</div>
         <button class="btn" id="coPlace" style="width:100%">Place Order</button>
       </div>
     </div>
     <div id="coStep2" style="display:none">
       <div class="co-success">
-        <div class="co-success__icon">✓</div>
+        <div class="co-success__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg></div>
         <h3>Order placed!</h3>
         <p>Thank you, <strong id="coNameDisplay"></strong>.<br>Your order is being prepared.</p>
         <p class="co-order-num" id="coOrderNum"></p>
@@ -163,15 +178,15 @@
   <div class="search-modal">
     <div class="search-bar">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" id="searchInput" placeholder="Search drinks, bakery…" autocomplete="off">
-      <button id="closeSearch">✕</button>
+      <input type="text" id="searchInput" placeholder="Search drinks, bakery..." autocomplete="off">
+      <button class="icon-only" id="closeSearch" aria-label="Close search"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
     </div>
     <div id="searchResults"></div>
   </div>
 </div>
 <div class="overlay" id="overlay"></div>
 <aside class="drawer" id="drawer">
-  <div class="drawer__head"><h3>Your Cart</h3><button id="closeCart">✕</button></div>
+  <div class="drawer__head"><h3>Your Cart</h3><button class="icon-only" id="closeCart" aria-label="Close cart"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
   <div class="drawer__items" id="cartItems"></div>
   <div class="drawer__foot"><div class="total"><span>Total</span><span id="cartTotal">$0.00</span></div><button class="checkout" id="checkout">Checkout</button></div>
 </aside>
